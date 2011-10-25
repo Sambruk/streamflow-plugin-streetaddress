@@ -1,0 +1,110 @@
+<!--
+
+    Copyright 2011 Streamsource AB. All Rights Reserved by Streamsource AB.
+
+    The content of this file is property of Streamsource AB, org no 556777-9896, with the address
+    Hans Michelsensgatan 9, SE-211 20 Malmö, Sweden. Any unauthorized review, use, disclosure
+    or distribution is prohibited.
+
+-->
+<script type="text/javascript">
+## BankID
+#if ($result.provider == "nexus-personal_4X")
+
+
+function doSign() {
+    
+	var signer2 = document.getElementById("signer2");
+
+	//alert("TextToBeSigned: ${result.encodedTbs}")
+	signer2.SetParam('TextToBeSigned', '${result.encodedTbs}');
+	signer2.SetParam('ServerTime', '${result.serverTime}');
+	signer2.SetParam('Nonce', '${result.nonce}');
+	
+	var retVal = signer2.PerformAction('Sign');
+	
+	if (retVal == 0) {
+	    document.signerData.signature.value = signer2.GetParam('Signature');
+	} 
+    return retVal;
+}
+
+## Nordea
+#elseif ($result.provider == "nexus-personal_4")
+
+function doSign()
+{
+	var signer = document.getElementById("signer");
+	
+	//alert("DataToBeSigned: ${result.encodedTbs}")
+	signer.SetDataToBeSigned("${result.encodedTbs}");
+
+	signer.SetCharacterEncoding("UTF8");
+	signer.SetSignReturnName("signature");
+	signer.SetBase64("true");
+	signer.SetIncludeCaCert("true");
+	signer.SetUseBranding("false");
+	signer.SetViewData("false");
+	
+	var retVal = signer.Sign();
+	
+	if (retVal == 0) {
+	    document.signerData.signature.value = signer.GetSignature();
+	} 
+    return retVal;
+}
+
+##TeliaSonera/Posten
+#elseif ($result.provider == "netmaker-netid_4")
+
+function doSign()
+{
+	var iid = document.getElementById("iid");
+    iid.SetProperty("Base64", "true");
+    iid.SetProperty("URLEncode", "false");
+    iid.SetProperty("Authentication", "false");
+    iid.SetProperty("IncludeCaCert", "true");
+    iid.SetProperty("DataToBeSigned", "${result.encodedTbs}");
+
+    var retVal = iid.Invoke("Sign");
+    
+    if (retVal == 0){
+    	document.signerData.signature.value = iid.GetProperty("Signature");
+    }
+	return retVal;
+}
+
+#end
+	
+function setupPlugins(){
+	$('<div id="signerDiv"></div>').appendTo('body');
+	addSigners($("#signerDiv"));
+}
+
+function signForm(){
+	try {
+		var retVal = doSign();
+
+		if (retVal == 0){
+			alert("Signed successfully");
+			return true;
+		} else {
+			alert("Signing failed with error code: " + retVal);
+			return false;
+		}
+			
+	} catch (e){
+		alert("Signing failed because: " + e);
+		return false;
+	}
+}
+</script>
+
+<form method="POST" name="signerData" action="${result.successUrl}">
+    <input name="nonce" value="${result.nonce}" type="hidden">
+    <input name="signature" value="" type="hidden">
+    <input name="encodedTbs" value="${result.encodedTbs}" type="hidden"/>
+    <input name="provider" value="${result.provider}" type="hidden"/>
+
+    <input type="submit" onclick="return signForm();" value="Sign">
+</form>

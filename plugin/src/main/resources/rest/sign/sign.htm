@@ -1,0 +1,22 @@
+<!--
+
+    Copyright 2011 Streamsource AB. All Rights Reserved by Streamsource AB.
+
+    The content of this file is property of Streamsource AB, org no 556777-9896, with the address
+    Hans Michelsensgatan 9, SE-211 20 Malmö, Sweden. Any unauthorized review, use, disclosure
+    or distribution is prohibited.
+
+-->
+<html>
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+</head>
+<body onLoad="setupPlugins();">
+
+#parse("rest/sign/header.htm")
+    
+<h2>Browser: ${request.getClientInfo().getAgentName()}</h2>
+
+#parse("rest/sign/surface.htm")
+</body>
+</html>

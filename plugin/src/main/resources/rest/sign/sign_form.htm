@@ -1,0 +1,47 @@
+<!--
+
+    Copyright 2011 Streamsource AB. All Rights Reserved by Streamsource AB.
+
+    The content of this file is property of Streamsource AB, org no 556777-9896, with the address
+    Hans Michelsensgatan 9, SE-211 20 Malmö, Sweden. Any unauthorized review, use, disclosure
+    or distribution is prohibited.
+
+-->
+<html>
+<head>
+    <style type="text/css">
+    form label {
+	   display: block;  /* block float the labels to left column, set a width */
+	   float: left;
+	   width: 150px;
+	   padding: 0;
+	   margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
+	   text-align: right;
+
+    }
+    form br {
+	   clear:left;
+    }
+    </style>
+
+</head>
+<body>
+<form method="POST" action="">
+    <label for="tbs">Text to be signed</label><input type="text" name="tbs" /><br/>
+    <label for="hiddentbs">Hidden TBS</label><input type="text" name="hiddenTbs" /><br/>
+    <label for="transactionId">Transaction Id (optional)</label><input type="text" name="transactionId" /><br/>
+    <label for="successUrl">Success URL</label><input type="text" name="successUrl" /><br/>
+    <label for="errorUrl">Error URL</label><input type="text" name="errorUrl" /><br/>
+<br/>
+
+<select NAME="provider" >
+  <option VALUE="nexus-personal_4">Nordea</option>
+  <option VALUE="nexus-personal_4X">BankID</option>
+  <option VALUE="netmaker-netid_4">TeliaSonera/Posten</option>
+</select>
+    <br/>
+
+    <input type="submit" name="sign" value="Sign"/>
+</form>
+</body>
+</html>

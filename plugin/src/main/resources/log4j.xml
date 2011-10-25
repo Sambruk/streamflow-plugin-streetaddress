@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2011 Streamsource AB. All Rights Reserved by Streamsource AB.
+
+    The content of this file is property of Streamsource AB, org no 556777-9896, with the address
+    Hans Michelsensgatan 9, SE-211 20 Malmö, Sweden. Any unauthorized review, use, disclosure
+    or distribution is prohibited.
+
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p %c{1} - %m%n"/>
+        </layout>
+    </appender>
+
+    <logger name="se.streamsource.streamflow.plugin.eid.application">
+        <level value="DEBUG"/>
+    </logger>
+
+    <!-- Monitors -->
+    <logger name="monitor" additivity="false">
+    </logger>
+
+    <root>
+        <level value="INFO"></level>
+        <appender-ref ref="stdout"/>
+    </root>
+</log4j:configuration>
+        
