@@ -17,9 +17,6 @@ public interface DbStreetAddressLookupPluginConfiguration
    
    @UseDefaults
    Property<String> query();
-   
-   @UseDefaults
-   Property<Integer> minkeywordlength();
 
    @UseDefaults
    Property<Integer> limit();

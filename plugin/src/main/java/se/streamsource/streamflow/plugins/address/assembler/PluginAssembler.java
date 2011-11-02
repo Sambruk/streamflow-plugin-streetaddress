@@ -7,18 +7,17 @@
  */
 package se.streamsource.streamflow.plugins.address.assembler;
 
-import javax.sql.DataSource;
-
 import org.qi4j.api.common.Visibility;
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.spi.service.importer.ServiceInstanceImporter;
-
 import se.streamsource.infrastructure.database.DataSourceConfiguration;
 import se.streamsource.infrastructure.database.DataSourceService;
 import se.streamsource.streamflow.plugins.address.contact.DbSteetAddressLookupPlugin;
 import se.streamsource.streamflow.plugins.address.contact.DbStreetAddressLookupPluginConfiguration;
+
+import javax.sql.DataSource;
 
 /**
  * Register reference plugins in the plugin application

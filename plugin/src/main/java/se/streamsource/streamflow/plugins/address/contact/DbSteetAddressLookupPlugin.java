@@ -7,12 +7,6 @@
  */
 package se.streamsource.streamflow.plugins.address.contact;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.injection.scope.Structure;
@@ -23,7 +17,6 @@ import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.service.ServiceReference;
 import org.qi4j.api.structure.Module;
 import org.qi4j.api.value.ValueBuilder;
-
 import se.streamsource.infrastructure.database.Databases;
 import se.streamsource.infrastructure.database.Databases.ResultSetVisitor;
 import se.streamsource.infrastructure.database.Databases.StatementVisitor;
@@ -31,6 +24,11 @@ import se.streamsource.streamflow.server.plugin.address.StreetAddressLookup;
 import se.streamsource.streamflow.server.plugin.address.StreetAddressLookupException;
 import se.streamsource.streamflow.server.plugin.address.StreetList;
 import se.streamsource.streamflow.server.plugin.address.StreetValue;
+
+import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 @Mixins(DbSteetAddressLookupPlugin.Mixin.class)
@@ -62,31 +60,32 @@ public interface DbSteetAddressLookupPlugin
          final ValueBuilder<StreetList> streetsBuilder = module.valueBuilderFactory().newValueBuilder( StreetList.class );
          try
          {
-            if (config.configuration().minkeywordlength().get() <= streetTemplate.address().get().length())
+
+            databases.query( config.configuration().query().get(), new StatementVisitor()
             {
-               databases.query( config.configuration().query().get(), new StatementVisitor()
+
+               public void visit( PreparedStatement preparedStatement ) throws SQLException
                {
+                  preparedStatement.setString( 1, streetTemplate.address().get() );
 
-                  public void visit(PreparedStatement preparedStatement) throws SQLException
-                  {
-                     preparedStatement.setString( 1, streetTemplate.address().get() );
+               }
+            }, new ResultSetVisitor()
+            {
 
-                  }
-               }, new ResultSetVisitor()
+               public boolean visit( ResultSet visited ) throws SQLException
                {
+                  int limit = config.configuration().limit().get();
 
-                  public boolean visit(ResultSet visited) throws SQLException
-                  {
-
-                     ValueBuilder<StreetValue> streetBuilder = module.valueBuilderFactory().newValueBuilder(
-                           StreetValue.class );
-                     streetBuilder.prototype().address().set( visited.getString( 1 ) );
-                     streetBuilder.prototype().area().set( visited.getString( 2 ) );
-                     streetsBuilder.prototype().streets().get().add( streetBuilder.newInstance() );
-                     return visited.getRow() <= config.configuration().limit().get();
-                  }
-               } );
+                  ValueBuilder<StreetValue> streetBuilder = module.valueBuilderFactory().newValueBuilder(
+                        StreetValue.class );
+                  streetBuilder.prototype().address().set( visited.getString( 1 ) );
+                  streetBuilder.prototype().area().set( visited.getString( 2 ) );
+                  streetsBuilder.prototype().streets().get().add( streetBuilder.newInstance() );
+                  return limit == -1 ? true : visited.getRow() <= config.configuration().limit().get();
+               }
             }
+            );
+
          } catch (SQLException e)
          {
             throw new StreetAddressLookupException( "Could not query database", e );
