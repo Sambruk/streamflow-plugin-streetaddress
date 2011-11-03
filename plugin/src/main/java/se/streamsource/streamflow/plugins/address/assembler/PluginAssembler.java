@@ -34,6 +34,7 @@ public class PluginAssembler implements Assembler
             .setMetaInfo( "datasource" ).identifiedBy( "streetds" ).visibleIn( Visibility.application );
 
       module.entities( DbStreetAddressLookupPluginConfiguration.class ).visibleIn( Visibility.application );
+      module.forMixin( DbStreetAddressLookupPluginConfiguration.class ).declareDefaults().limit().set( -1 );
 
       module.services( DbSteetAddressLookupPlugin.class ).identifiedBy( "databasestreetaddresslookup" )
             .visibleIn( Visibility.application ).instantiateOnStartup();
