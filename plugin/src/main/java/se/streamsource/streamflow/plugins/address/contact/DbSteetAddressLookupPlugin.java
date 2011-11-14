@@ -103,5 +103,10 @@ public interface DbSteetAddressLookupPlugin
             throw new StreetAddressLookupException("DataSource not available", e);
          }
       }
+
+      public void reindex()
+      {
+         
+      }
    }
 }
