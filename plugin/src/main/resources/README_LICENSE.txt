@@ -3,7 +3,7 @@ Streamflow (tm) eID PlugIn
 
 Copyright 2010-2011 Streamsource AB
 
-Streamflow (tm) StreetIndex PlugIn (the "Software") is licensed under the Streamsource Binary Code 
+Streamflow (tm) StreetAddress PlugIn (the "Software") is licensed under the Streamsource Binary Code 
 License Terms and Conditions, Version 1.0 (the "License"). 
 You may not use the Software except in compliance with the License.
 
