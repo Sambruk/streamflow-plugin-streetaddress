@@ -3,11 +3,11 @@
     <parent>
         <groupId>se.streamsource.streamflow.plugins</groupId>
         <artifactId>streamflow-streetaddress</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>streamflow-plugin-streetaddress</artifactId>
     <groupId>se.streamsource.streamflow.plugins</groupId>
-    <version>1.0.0</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Streamflow StreetAddress Plugin</name>
     <description>Streamflow Commercial Street Address plugin implementation</description>
