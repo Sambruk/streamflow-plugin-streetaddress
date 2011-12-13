@@ -4,7 +4,7 @@
     Copyright 2011 Streamsource AB. All Rights Reserved by Streamsource AB.
 
     The content of this file is property of Streamsource AB, org no 556777-9896, with the address
-    Hans Michelsensgatan 9, SE-211 20 MalmÃ¶, Sweden. Any unauthorized review, use, disclosure
+    Hans Michelsensgatan 9, SE-211 20 Malmö, Sweden. Any unauthorized review, use, disclosure
     or distribution is prohibited.
 
 -->
@@ -23,6 +23,10 @@
         <init-param>
         	<param-name>preference-node</param-name>
         	<param-value>streamsource/streamflow/plugin-streetaddress</param-value>
+        </init-param>
+        <init-param>
+            <param-name>name</param-name>
+            <param-value>StreetAddressLookup</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
 
